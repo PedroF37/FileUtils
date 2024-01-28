@@ -1,5 +1,5 @@
-#ifndef _FILEUTILS_
-#define _FILEUTILS_
+#ifndef _FILEUTILS_H
+#define _FILEUTILS_H
 
 
 #include <stdio.h>
