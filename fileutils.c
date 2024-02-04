@@ -1,3 +1,7 @@
+#define _DEFAULT_SOURCE
+#define _GNU_SOURCE
+#define _POSIX_SOURCE
+
 #include "fileutils.h"
 
 
@@ -75,4 +79,63 @@ void remove_last_chars(char *itemname, int start_reject, size_t size)
     {
         itemname[itemname_len - size] = '\0';
     }
+}
+
+
+
+bool is_regular_file(char *pathname)
+{
+    struct stat itemstat;
+    if (stat(pathname, &itemstat) != 0)
+    {
+        return(false);
+    }
+
+    if (!S_ISREG(itemstat.st_mode))
+    {
+        return(false);
+    }
+
+    return(true);
+}
+
+
+bool is_directory(char *pathname)
+{
+    struct stat itemstat;
+    if (stat(pathname, &itemstat) != 0)
+    {
+        return(false);
+    }
+
+    if (!S_ISDIR(itemstat.st_mode))
+    {
+        return(false);
+    }
+
+    return(true);
+}
+
+
+bool is_simlink(char *pathname)
+{
+    struct stat itemstat;
+    if (lstat(pathname, &itemstat) == -1)
+    {
+        return(true);
+    }
+
+    return(false);
+}
+
+
+bool is_equal_name(char *name, char *target)
+{
+    if (strncmp(name, target,
+        strlen(target)) != 0)
+    {
+        return(false);
+    }
+
+    return(true);
 }
